@@ -1,0 +1,10 @@
+rofi.icon-theme: Papirus
+rofi.show-icons: true
+
+configuration {
+ modi: "window,drun,ssh,combi";
+ theme: "solarized";
+ font: "hack 10";
+ combi-modi: "window,drun";
+ }
+rofi.theme: /usr/share/rofi/themes/android_notification.rasi

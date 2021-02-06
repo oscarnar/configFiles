@@ -1,0 +1,245 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[colors]
+; Black + DarkGrey
+color0 = ${xrdb:color0}
+color8 = ${xrdb:color8}
+; DarkRed + Red
+color1 = ${xrdb:color1}
+color9 = ${xrdb:color9}
+; DarkGreen + Green
+color2 = ${xrdb:color2}
+color10 = ${xrdb:color10}
+; DarkYellow + Yellow
+color3 = ${xrdb:color3}
+color11 = ${xrdb:color11}
+; DarkBlue + Blue
+color4 = ${xrdb:color4}
+color12 = ${xrdb:color12}
+; DarkMagenta + Magenta
+color5 = ${xrdb:color5}
+color13 = ${xrdb:color13}
+; DarkCyan + Cyan
+color6 = ${xrdb:color6}
+color14 = ${xrdb:color14}
+; LightGrey + White
+color7 = ${xrdb:color7}
+color15 = ${xrdb:color15}
+
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+
+
+[bar/top]
+monitor = ${env:MONITOR:eDP1}
+width = 100%
+height = 40
+radius = 4.0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-left-size = 15 ; margin left
+border-right-size = 15 ; margin left
+border-top-size = 10
+
+padding-left = 0
+padding-right = 3
+
+module-margin-left = 2
+module-margin-right = 4
+
+font-0 = PragmataPro Bold Nerd Font:size=10;1
+font-1 = FontAwesome:size=13;2
+
+; modules-left = hostname
+modules-left = i3
+modules-center = date
+modules-right = country wifi ethernet volume battery memory cpu
+
+; tray-padding = 0
+
+
+; Module for window title
+;[module/xwindow]
+;type = internal/xwindow
+;label = %title:0:40:...%
+
+
+; Module for i3 workspaces
+[module/i3]
+type = internal/i3
+; Icons
+ws-icon-[0-9]+ = label;icon
+ws-icon-0 = 1;000
+ws-icon-1 = 2;001
+ws-icon-2 = 3;010
+ws-icon-3 = 4;011
+ws-icon-4 = 5;100
+ws-icon-5 = 6;101
+ws-icon-6 = 7;110
+ws-icon-7 = 8;111
+;ws-icon-8 = 9;▘9
+;ws-icon-9 = 10;▘10
+;ws-icon-default = ▘
+strip-wsnumbers = true
+format = <label-state> <label-mode>
+index-sort = true
+pin-workspaces = true
+wrapping-scroll = false
+label-mode-padding = 3
+label-mode-background = ${colors.background}
+label-focused = "%icon%"
+label-focused-background = ${colors.color4}
+label-focused-underline = ${colors.color1}
+label-focused-padding = 3
+label-unfocused = "%icon%"
+label-unfocused-padding = 3
+label-urgent = "%icon%"
+label-urgent-background = ${colors.color1}
+label-urgent-underline = ${colors.color4}
+label-urgent-padding = 3
+
+
+; Module for wifi
+[module/wifi]
+type = internal/network
+interface = wlp2s0
+interval = 5
+ping-interval = 5
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = " %essid%"
+format-disconnected = <label-disconnected>
+label-disconnected = " ..."
+label-disconnected-foreground = ${colors.color1}
+ramp-signal-0 = wifi :
+ramp-signal-foreground = ${colors.color13}
+
+format-packetloss = <animation-packetloss> <label-connected>
+animation-packetloss-0 = wifi :
+animation-packetloss-0-foreground = ${colors.color3}
+animation-packetloss-1 = wifi :
+animation-packetloss-1-foreground = ${colors.background}
+animation-packetloss-framerate = 1000
+
+
+; Module for ethernet
+[module/ethernet]
+type = internal/network
+interface = eno1
+interval = 5
+ping-interval = 5
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.color13}
+label-connected = " %local_ip%"
+format-disconnected = 
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.color1}
+
+
+; Module for date & time
+[module/date]
+type = internal/date
+interval = 60
+label = "%date%   %time%"
+date = %b %d
+time = %H:%M
+
+
+; Module for volume 
+[module/volume]
+type = internal/volume
+format-volume = <label-volume>
+format-volume-prefix = "vol : "
+format-volume-prefix-foreground = ${colors.color4}
+label-volume = %percentage% %
+;format-muted-prefix = "vol : "
+format-muted-prefix-foreground = ${colors.color4}
+label-muted = "Muted"
+
+
+; Module for battery
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 100
+poll-interval = 60
+
+format-charging = <label-charging>
+format-charging-foreground = ${colors.color2}
+format-charging-prefix = "bat : "
+
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full-prefix = "full : "
+format-full-prefix-foreground = ${colors.color2}
+
+ramp-capacity-0 = %{F#fb4934}bat : %{F-}
+ramp-capacity-1 = %{F#fabd2f}bat : %{F-}
+ramp-capacity-2 = %{F#b8bb26}bat : %{F-}
+
+
+[module/memory]
+type = internal/memory
+interval = 5
+format-prefix = "ram : "
+format-prefix-foreground = ${colors.color6}
+format = <label>
+label = %mb_used%
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "cpu : "
+format-prefix-foreground = ${colors.foreground}
+format = <label> <ramp-coreload>
+label = "%percentage% %  "
+
+ramp-coreload-0 = %{O-4}▁
+ramp-coreload-0-foreground = #3c3836
+
+ramp-coreload-1 = %{O-4}▂
+ramp-coreload-1-foreground = #504945
+
+ramp-coreload-2 = %{O-4}▃
+ramp-coreload-2-foreground = #665c54
+
+ramp-coreload-3 = %{O-4}▄
+ramp-coreload-3-foreground = #7c6fc4
+
+ramp-coreload-4 = %{O-4}▅
+ramp-coreload-4-foreground = #928374
+
+ramp-coreload-5 = %{O-4}▆
+ramp-coreload-5-foreground = #a89984
+
+ramp-coreload-6 = %{O-4}▇
+ramp-coreload-6-foreground = #bdae93
+
+ramp-coreload-7 = %{O-4}█
+ramp-coreload-7-foreground = #d5c4a1
+
+[module/country]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/country
+interval = 1800
+format-prefix = "ctry : "
+format-prefix-foreground = ${colors.color8}
+format = <label>
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5

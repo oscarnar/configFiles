@@ -1,0 +1,146 @@
+# For the benefit of emacs users: -*- shell-script -*-
+#
+#  _ _____ _     _            _
+# (_)___ /| |__ | | ___   ___| | _____
+# | | |_ \| '_ \| |/ _ \ / __| |/ / __|
+# | |___) | |_) | | (_) | (__|   <\__ \
+# |_|____/|_.__/|_|\___/ \___|_|\_\___/
+
+align=center
+separator=false
+color=#ffffff
+separator_block_width=10
+markup=pango
+
+#[ytdl-mpv]
+#command=~/.config/i3blocks/blocks/ytdl-mpv/ytdl-mpv
+#markup=pango
+#interval=once
+#signal=4
+##CACHE_DEFAULT=1048576
+##PLAYING_COLOR=red
+##NOT_PLAYING_COLOR=white
+
+[mediaplayer]
+command=playerctl metadata --format "{{ artist }} - {{ title }}"
+interval=2
+label=<span color="#a9e185"> </span>
+
+[arch-update]
+command=checkupdates | wc -l
+interval=once
+label=<span color="#1793D1"> </span>
+
+#[battery]
+#interval=2
+#color=#ff79c6
+
+[battery]
+command=~/.config/i3blocks/blocks/battery/battery
+interval=2
+LABEL=<span color="#FFFF66">⚡</span>
+#color=#ff79c6
+#BAT_NUMBER=0
+
+[wifi]
+command=iwgetid -r | tr '\n' ' ' && grep $(iwgetid -m | awk '{ printf "%s", $1 }') /proc/net/wireless | awk '{ printf "%i%\n", int($3 * 100 / 70) }'
+instance=wlp11s0f3u1
+interval=5
+label=<span color="#ffb86c"> </span>
+
+#[new-vpn]
+#command=~/.config/i3blocks/blocks/openvpn/openvpn
+#interval=1
+#label=<span color="#8be9fd"> </span>
+
+[home]
+command=df -h /home | awk 'FNR==2{print $4}'
+interval=3
+label=<span color="#a9e185"> </span>
+
+[root]
+command=df -h / | awk 'FNR==2{print $4}'
+interval=3
+label=<span color="#aaceef"> </span>
+
+#[gpu-load]
+#command=~/.config/i3blocks/blocks/gpu-load/gpu-load | awk 'FNR==1{ printf "%s %s\n", $1, $2 }'
+#label=<span color="#ffb86c"> </span>
+#interval=2
+
+#[gpu-temperature]
+#command=~/.config/i3blocks/blocks/temperature/temperature
+#interval=2
+#SENSOR_CHIP="k10temp-pci-00c3"
+#label=<span color="#ffb86c"> </span>
+
+[cpu_usage]
+command=~/.config/i3blocks/blocks/cpu_usage/cpu_usage
+interval=2
+label=<span color="#8be9fd"> </span>
+decimals=0
+
+[cpu-temperature]
+command=~/.config/i3blocks/blocks/temperature/temperature
+interval=5
+label=<span color="#8be9fd"> </span>
+#SENSOR_CHIP="jc42-i2c-0-1a"
+
+[memory]
+command=free -h --si | awk 'FNR==2{ print $0 }' | awk '{ print $7 }'
+interval=2
+label=<span color="#a9e185"> </span>
+
+#[volume]
+#command=pulseaudio-ctl full-status | awk '{ printf "%i%\n", $1 }'
+#interval=2
+#label=<span color="#aaceef"> </span>
+
+#[volume]
+#command=~/.config/i3blocks/blocks/volume/volume
+#interval=2
+#label=<span color="#aaceef"> </span>
+#signal=5
+
+[volume-pulseaudio]
+command=~/.config/i3blocks/blocks/volume-pulseaudio/volume-pulseaudio
+interval=1
+signal=1
+AUDIO_DELTA=5
+AUDIO_HIGH_SYMBOL=<span color="#aaceef"></span>
+AUDIO_MED_THRESH=50
+AUDIO_MED_SYMBOL=<span color="#aaceef"></span>
+AUDIO_LOW_THRESH=50
+AUDIO_LOW_SYMBOL=<span color="#aaceef"></span>
+DEFAULT_COLOR="#ececec"
+SHORT_FORMAT=${SYMB} ${VOL}%
+LONG_FORMAT=${SYMB} ${VOL}%
+
+[time]
+command=date '+%I:%M'
+interval=1
+label=<span color="#ffb86c"> </span>
+
+#[date]
+#command=date '+%A %e'
+#interval=60
+#label=<span color="#8be9fd"> </span>
+
+[calendar]
+command=~/.config/i3blocks/blocks/calendar/calendar
+interval=1
+LABEL=<span color="#8be9fd"> </span>
+#DATEFMT=+%a %d.%m.%Y
+SHORTFMT=+%H:%M:%S
+#HEIGHT=180
+#WIDTH=220
+#yad=asd
+
+[shutdown_menu]
+full_text=<span color="#a9e185"> </span>
+command=~/.config/i3blocks/blocks/shutdown_menu/shutdown_menu
+ROFI_TEXT=Menu:
+ROFI_OPTIONS=-no-config -location 3 -yoffset 29 -width 5 -xoffset 5 -bw 0 -border 0 -theme ~/.config/rofi/menu.rasi
+ENABLE_CONFIRMATIONS=true
+LAUNCHER=rofi
+LOCKSCRIPT=betterlockscreen -l dimblur
