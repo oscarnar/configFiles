@@ -81,6 +81,7 @@ bindsym $mod+e layout toggle split
 # Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
+
 # Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
@@ -195,13 +196,16 @@ for_window [title="^Steam Keyboard$"] floating enable
 for_window [class="Yad"] floating enable
 
 # Border for all windows
-for_window [class=".*"] border pixel 3
+for_window [class=".*"] border pixel 4
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 
-# Change wallpapers
-bindsym $mod+b exec feh --randomize --bg-scale ~/Pictures/Wallpapers/*
+# Change wallpapers --bg-scale 
+bindsym $mod+b exec feh --randomize --bg-fill ~/Pictures/Wallpapers/*
+
+# Change to one screen
+bindsym $mod+Shift+b exec xrandr --output DP1 --off --output eDP1 --auto
 
 # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
@@ -239,7 +243,8 @@ set $fg      #f8f8f2
 set $cyan    #8be9fd
 set $green   #50fa7b
 set $magenta #cbdbad
-set $comment #2e4a5e
+#set $comment #2e4a5e
+set $comment #4D7C9D
 set $purple  #bd93f9
 set $white   #ffffff
 set $red     #ff6f63
@@ -271,14 +276,18 @@ client.placeholder          $bg      $bg        $white   $bg
 #        i3bar_command ~/.config/polybar/launch.sh
 #    }
 
-# Polyabr launch
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Startup programs
-exec_always --no-startup-id ~/.config/i3/monitors.sh
+# exec_always --no-startup-id ~/.config/i3/monitors.sh
+exec_always --no-startup-id $HOME/.config/i3/i3-autodisplay/i3-autodisplay -config $HOME/.config/i3/i3-autodisplay/sample_config.yml
 #exec_always --no-startup-id ~/.scripts/wallpapers.sh
 exec --no-startup-id numlockx on
 exec --no-startup-id betterlockscreen -w dim
+
+# Polyabr launch
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec sleep 1; $HOME/.config/polybar/launch_polybar.sh
 
 # First aplication notification
 #exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd
@@ -294,8 +303,10 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
 #exec --no-startup-id pulseaudio
-exec --no-startup-id notify-send "Welcome back Oscar!" -i ~/Pictures/rick.png
-exec --no-startup-id feh --randomize --bg-scale ~/Pictures/Wallpapers/*
+#exec --no-startup-id notify-send "Welcome back Oscar!" -i ~/Pictures/rick.png
+#exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
+
+exec sleep 1; notify-send "Welcome back Oscar!" -i ~/Pictures/rick.png; feh --randomize --bg-fill ~/Pictures/Wallpapers/*
 
 # tap enable
 #xinput set-prop 13 325 1

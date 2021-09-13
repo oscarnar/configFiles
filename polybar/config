@@ -7,6 +7,7 @@
 ;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
 ;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
 ;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+
 ;
 ;
 ;   To learn more about how to configure Polybar
@@ -30,14 +31,14 @@ secondary = #e60053
 alert = #ff6565
 
 [bar/example]
-;monitor = ${env:MONITOR:HDMI-1}
-width = 95%:
+monitor = ${env:MONITOR:}
+width = 97%:
 height = 23
-offset-x = 2.5%
+offset-x = 1.5%
 ;offset-x = 1%
 ;offset-y = 1%
-offset-y = 0.5%
-radius = 5.0
+offset-y = 0.8%
+radius = 8.0
 fixed-center = true
 
 background = ${colors.background}
@@ -49,8 +50,8 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 2
-padding-right = 2
+padding-left = 1
+padding-right = 1
 
 module-margin-left = 1
 module-margin-right = 1
@@ -68,9 +69,10 @@ modules-left = i3 xwindow
 modules-right = mediaplayer update cpu memory temperature backlight-acpi pulseaudio wlan eth battery date sep power
 
 tray-position = right
-;tray-padding = 2
+tray-padding = 2
 ;tray-background = #0063ff
 tray-transparent = true
+;override-redirect = true
 
 ;wm-restack = bspwm
 wm-restack = i3
@@ -180,8 +182,7 @@ label-mode-background = ${colors.primary}
 ; focused = Active workspace on focused monitor
 ;label-focused = %index%
 label-focused = %icon%
-label-focused-background = #0000
-;${colors.background-alt}
+label-focused-background = ${colors.background}
 ;label-focused-underline= ${colors.primary}
 label-focused-foreground= #85a7e6
 ;label-focused-foreground= ${colors.primary}
@@ -230,19 +231,21 @@ content = |
 type = custom/script
 ;exec = sudo ~/.config/polybar/scripts/update.sh
 exec = checkupdates | wc -l
-interval = 3000
+interval = 300
 format = <label>
-label = %{T2}%{T-} %output%
+label = %{T2}%{T-} %output:0:5:...%
 ;click-left = "bash ~/.config/polybar/scripts/upclick.sh"
+click-left = "checkupdates | wc -l"
 format-underline = #1793d1 
+exec-if = checkupdates
 
 [module/mediaplayer]
 type = custom/script
-exec = playerctl metadata --format "{{ artist }} - {{ title }}"
+exec = playerctl metadata --format "{{title}} - {{artist}}"
 exec-if = playerctl metadata
 interval = 2
 format = <label>
-label = %{T2}%{F#A3BE8C} %{T-} %{F#FFFFFF}%output:0:40:...%
+label = %{T2}%{F#A3BE8C}%{T-} %{F#FFFFFF}%output:0:40:...%
 ;click-left = "bash ~/.config/polybar/scripts/upclick.sh"
 
 [module/xbacklight]
